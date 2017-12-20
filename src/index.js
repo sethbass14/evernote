@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // document.getElementById('note-titles').addEventListener('click', noteShowListener)
   document.getElementById('note-titles').addEventListener('click', noteShowListener)
   // Moved newNoteForm to evenhandlers.js
-  document.getElementById('note-new').addEventListener('click', event => newNoteForm(formDiv))
+  // document.getElementById('note-new').addEventListener('click', event => newNoteForm(formDiv))
+  document.getElementById('note-new').addEventListener('click', getFormHandler(formDiv))
 
   document.getElementById('note-form-div').addEventListener('click', noteFormListener)
 });
@@ -36,8 +37,8 @@ function noteShowListener(event){
 function noteFormListener(event) {
   if (event.target.id === 'note-submit') {
     event.preventDefault()
-    console.log("FORM")
     newNote()
+    event.currentTarget.innerHTML = ''
   }
 }
 
