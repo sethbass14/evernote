@@ -12,18 +12,21 @@ function getFormHandler(domElement) {
   }
 }
 
-function showNoteListener(event) {
+function showNoteListener() {
   event.preventDefault()
   const note = Note.noteById(parseInt(event.target.dataset.noteId))
-  console.log(note)
   if (event.target.id === "delete") {
-    Adapter.deleteNote(note).then(json => Note.deleteNoteMemory(json))
-    document.getElementById(`note-${note.id}`).remove()
-    removeForm()
-    event.currentTarget.innerHTML = "<h1>POOF!</h1>"
+    deleteNoteAll(note, event)
   } else if (event.target.id ==="edit" && !document.getElementById('note-form-div').children.length) {
     renderEditForm(note)
   }
+}
+
+function deleteNoteAll(note, event) {
+  Adapter.deleteNote(note).then(json => Note.deleteNoteMemory(json))
+  document.getElementById(`note-${note.id}`).remove()
+  event.currentTarget.innerHTML = "<h1>POOF!</h1>"
+  removeForm()
 }
 
 function renderEditForm(note) {
