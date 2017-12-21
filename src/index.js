@@ -29,26 +29,25 @@ function showNote(note) {
   noteShowDiv.innerHTML = note.renderAll()
 }
 
+//Move this to eventhandlers.js
 function showNoteListener(event) {
-  console.log(event.target.id)
   if (event.target.id === "delete") {
     event.preventDefault()
+    //TODO Should the code below be abstracted to take an id
     const note = Note.noteByTitle(`${event.target.nextSibling.nextSibling.innerHTML}`)
-    Adapter.deleteNote(note)
-    console.log(note)
-    debugger
+    Adapter.deleteNote(note).then(json => {
+      Note.all = Note.all.filter(note =>
+        //TODO abstract the code aboe the list method
+        note.id !== json.id
+      )
+    })
     noteDelete(note)
     event.currentTarget.innerHTML = "<h1>POOF!</h1>"
-    //TODO some deleting in the memory
   }
 }
 
 function noteDelete(note) {
-  console.log(note)
-  debugger
   document.getElementById(`note-${note.id}`).remove()
-  // console.log(Note.all.find(noteObj => noteObj.id === note.id))
-  // //TODO delete the note from memory
 }
 
 function noteTitleListener(event){

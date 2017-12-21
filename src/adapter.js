@@ -27,7 +27,7 @@ class Adapter {
   }
 
   static deleteNote(note) {
-    fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
+    return fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
       method: 'DELETE'
     }).then(resp => resp.json())
   }
