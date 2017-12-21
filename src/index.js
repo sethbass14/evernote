@@ -44,11 +44,17 @@ function showNoteListener(event) {
       )
     })
     noteDelete(note)
+    removeForm()
     event.currentTarget.innerHTML = "<h1>POOF!</h1>"
-  } else if (event.target.id ==="edit") {
+  } else if (event.target.id ==="edit" && !document.getElementById('note-form-div').children.length) {
     event.preventDefault()
     renderEditForm(note)
   }
+}
+
+function removeForm() {
+  const formDiv = document.getElementById('note-form-div')
+  formDiv.innerHTML = ''
 }
 
 function renderEditForm(note) {
@@ -67,6 +73,7 @@ function noteDelete(note) {
 function noteTitleListener(event){
   if (event.target.id !== 'note-titles'){
     const targetNote = Note.noteByTitle(event.target.id)
+    removeForm()
     showNote(targetNote)
   }
 }
