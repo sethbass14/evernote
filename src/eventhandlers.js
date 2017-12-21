@@ -12,7 +12,6 @@ function getFormHandler(domElement) {
   }
 }
 
-console.log(1)
 
 
 // function showNoteListener(event) {
