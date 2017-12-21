@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const formDiv = document.getElementById('note-form-div')
   const noteShowDiv = document.getElementById('note-container')
 
-  document.getElementById('note-titles').addEventListener('click', noteTitleListener)
+  document.getElementById('note-titles').addEventListener('click', noteTitleListener(noteShowDiv))
 
   document.getElementById('note-new').addEventListener('click', getFormHandler(formDiv))
 
@@ -24,10 +24,10 @@ function showNoteTitle(note) {
   noteDiv.innerHTML += note.renderTitle()
 }
 
-function showNote(note) {
-  const noteShowDiv = document.getElementById("note-container")
-  noteShowDiv.innerHTML = note.renderAll()
-}
+// function showNote(note) {
+//   const noteShowDiv = document.getElementById("note-container")
+//   noteShowDiv.innerHTML = note.renderAll()
+// }
 
 //Move this to eventhandlers.js
 function showNoteListener(event) {
@@ -70,13 +70,13 @@ function noteDelete(note) {
   document.getElementById(`note-${note.id}`).remove()
 }
 
-function noteTitleListener(event){
-  if (event.target.id !== 'note-titles'){
-    const targetNote = Note.noteByTitle(event.target.id)
-    removeForm()
-    showNote(targetNote)
-  }
-}
+// function noteTitleListener(event){
+//   if (event.target.id !== 'note-titles'){
+//     const targetNote = Note.noteByTitle(event.target.id)
+//     removeForm()
+//     showNote(targetNote)
+//   }
+// }
 
 function noteFormListener(event) {
   if (event.target.id === 'note-submit') {

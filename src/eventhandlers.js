@@ -11,19 +11,17 @@ function getFormHandler(domElement) {
       }
   }
 }
-console.log(1)
-// function showNoteListener(event) {
-//   if (event.target.id === "delete") {
-//     event.preventDefault()
-//     //TODO Should the code below be abstracted to take an id
-//     const note = Note.noteByTitle(`${event.target.nextSibling.nextSibling.innerHTML}`)
-//     Adapter.deleteNote(note).then(json => {
-//       Note.all = Note.all.filter(note =>
-//         //TODO abstract the code aboe the list method
-//         note.id !== json.id
-//       )
-//     })
-//     noteDelete(note)
-//     event.currentTarget.innerHTML = "<h1>POOF!</h1>"
-//   }
-// }
+
+function noteTitleListener(domElement){
+  return function(event){
+    if (event.target.id !== 'note-titles'){
+      const targetNote = Note.noteByTitle(event.target.id)
+      removeForm()
+      showNote(targetNote, domElement)
+    }
+  }
+}
+
+function showNote(note, domElement) {
+  domElement.innerHTML = note.renderAll()
+}
