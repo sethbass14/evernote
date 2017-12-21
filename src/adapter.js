@@ -10,11 +10,12 @@ class Adapter {
         'Accept': 'application/json'
       },
       method: 'POST',
-      body: JSON.stringify({body: body, title: title})
+      body: JSON.stringify({
+        body: body,
+        title: title})
     }).then(resp => resp.json())
   }
 
-  // TODO check out the arguments!
   static postUpdateNote(note, title, body) {
     return fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
       headers: {
@@ -22,7 +23,9 @@ class Adapter {
         'Accept': 'application/json'
       },
       method: 'PATCH',
-      body: JSON.stringify({body: body, title: title})
+      body: JSON.stringify({
+        body: body,
+        title: title})
     }).then(resp => resp.json())
   }
 

@@ -12,6 +12,9 @@ function getFormHandler(domElement) {
   }
 }
 
+console.log(1)
+
+
 // function showNoteListener(event) {
 //   if (event.target.id === "delete") {
 //     event.preventDefault()
