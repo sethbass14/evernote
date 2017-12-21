@@ -9,7 +9,7 @@
 
     renderAll() {
       return `<div class="note" id="note-${this.id}">
-      <button id="delete" class="btn-outline-success btn-small">delete</button><button id="edit" class="btn-outline-success btn-small">Edit</button><h1>${this.title}</h1><p>${this.body}</p></div>`
+      <button data-note-id="${this.id}"id="delete" class="btn-outline-success btn-small">delete</button><button data-note-id="${this.id}"id="edit" class="btn-outline-success btn-small">Edit</button><h1>${this.title}</h1><p>${this.body}</p></div>`
     }
 
     renderTitle(){
@@ -22,6 +22,10 @@
 
     static noteByTitle(title) {
       return Note.all.find( note => note.title === title)
+    }
+
+    static noteById(id) {
+      return Note.all.find(note => note.id === id)
     }
 
   }
