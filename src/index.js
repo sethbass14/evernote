@@ -39,7 +39,7 @@ function showNoteListener(event) {
     debugger
     noteDelete(note)
     event.currentTarget.innerHTML = "<h1>POOF!</h1>"
-    //TODO some deleting
+    //TODO some deleting in the memory
   }
 }
 
