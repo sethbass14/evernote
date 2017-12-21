@@ -13,8 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('note-new').addEventListener('click', getFormHandler(formDiv))
 
-  formDiv.addEventListener('click', noteFormListener)
-
+  // Abstract this to the eventhandlers file
+  formDiv.addEventListener('click', noteFormListener(noteShowDiv))
+  // Abstract this to the eventhandles file
   noteShowDiv.addEventListener('click', showNoteListener)
 });
 
@@ -78,17 +79,17 @@ function noteDelete(note) {
 //   }
 // }
 
-function noteFormListener(event) {
-  if (event.target.id === 'note-submit') {
-    event.preventDefault()
-    newNote()
-    event.currentTarget.innerHTML = ''
-  } else if (event.target.id === 'edit-submit') {
-    event.preventDefault()
-    editNote(Note.noteById(parseInt(event.target.dataset.id)))
-    event.currentTarget.innerHTML = ''
-  }
-}
+// function noteFormListener(event) {
+//   if (event.target.id === 'note-submit') {
+//     event.preventDefault()
+//     newNote()
+//     event.currentTarget.innerHTML = ''
+//   } else if (event.target.id === 'edit-submit') {
+//     event.preventDefault()
+//     editNote(Note.noteById(parseInt(event.target.dataset.id)))
+//     event.currentTarget.innerHTML = ''
+//   }
+// }
 
 //Look at all of this
 function editNote(note) {

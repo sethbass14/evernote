@@ -22,6 +22,33 @@ function noteTitleListener(domElement){
   }
 }
 
+function noteFormListener(domElement) {
+  return function(event) {
+    if (event.target.id === 'note-submit') {
+      event.preventDefault()
+      newNote(domElement)
+      event.currentTarget.innerHTML = ''
+    } else if (event.target.id === 'edit-submit') {
+      event.preventDefault()
+      editNote(Note.noteById(parseInt(event.target.dataset.id)))
+      event.currentTarget.innerHTML = ''
+    }
+  }
+}
+
+function newNote(domElement) {
+  const noteTitle = document.getElementById('new-note-title').value
+  const noteBody = document.getElementById('new-note-body').value
+  const notePromise = Adapter.postNewNote(noteTitle, noteBody)
+  notePromise.then(noteObj => new Note(noteObj)).then(note => {
+     showNoteTitle(note);
+     console.log(domElement)
+     showNote(note, domElement)
+  })
+}
+
+
 function showNote(note, domElement) {
+  console.log(domElement)
   domElement.innerHTML = note.renderAll()
 }
