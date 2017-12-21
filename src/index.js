@@ -78,33 +78,27 @@ function noteFormListener(event) {
     event.currentTarget.innerHTML = ''
   } else if (event.target.id === 'edit-submit') {
     event.preventDefault()
-    console.log(event.target.dataset.id)
-    console.log(Note.noteById(parseInt(event.target.dataset.id)))
-    debugger
     editNote(Note.noteById(parseInt(event.target.dataset.id)))
     event.currentTarget.innerHTML = ''
   }
 }
 
+//Look at all of this
 function editNote(note) {
   const noteTitle = document.getElementById('edit-note-title').value
   const noteBody = document.getElementById('edit-note-body').value
-  console.log(noteTitle)
-  console.log(noteBody)
-  console.log(note)
-  const editNotePromise = Adapter.postUpdateNote(note, noteTitle, noteBody)
-  editNotePromise.then(noteObj => new Note(noteObj)).then(note => {
-    noteDelete(note)
-    showNote(note)
-    showNoteTitle(note)
-  })
+  const noteH3 = document.getElementById(note.title)
+  note.title = noteTitle
+  note.body = noteBody
+  noteH3.innerHTML = note.title
+  noteH3.id = note.title
+  Adapter.postUpdateNote(note, noteTitle, noteBody)
+  showNote(note)
 }
 
 function newNote() {
   const noteTitle = document.getElementById('new-note-title').value
   const noteBody = document.getElementById('new-note-body').value
-  console.log(noteTitle)
-  console.log(noteBody)
   const notePromise = Adapter.postNewNote(noteTitle, noteBody)
   notePromise.then(noteObj => new Note(noteObj)).then(note => {
      showNoteTitle(note);
