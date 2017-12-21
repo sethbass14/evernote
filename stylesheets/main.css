@@ -19,6 +19,11 @@ body {
   color: black;
   cursor: pointer
 }
+
+#note-container button {
+  margin: 20px;
+  cursor: pointer
+}
 /*.navbar h2 li{
   text-align: left;
 }*/

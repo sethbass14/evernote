@@ -7,14 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const formDiv = document.getElementById('note-form-div')
-  // document.getElementById('note-titles').addEventListener('click', noteShowListener)
-  document.getElementById('note-titles').addEventListener('click', noteShowListener)
-  // Moved newNoteForm to evenhandlers.js
-  // document.getElementById('note-new').addEventListener('click', event => newNoteForm(formDiv))
+  const noteShowDiv = document.getElementById('note-container')
+
+  document.getElementById('note-titles').addEventListener('click', noteTitleListener)
+
   document.getElementById('note-new').addEventListener('click', getFormHandler(formDiv))
 
-  document.getElementById('note-form-div').addEventListener('click', noteFormListener)
+  formDiv.addEventListener('click', noteFormListener)
+
+  noteShowDiv.addEventListener('click', showNoteListener)
 });
+
 
 function showNoteTitle(note) {
   const noteDiv = document.getElementById("note-titles")
@@ -26,8 +29,29 @@ function showNote(note) {
   noteShowDiv.innerHTML = note.renderAll()
 }
 
+function showNoteListener(event) {
+  console.log(event.target.id)
+  if (event.target.id === "delete") {
+    event.preventDefault()
+    const note = Note.noteByTitle(`${event.target.nextSibling.nextSibling.innerHTML}`)
+    Adapter.deleteNote(note)
+    console.log(note)
+    debugger
+    noteDelete(note)
+    event.currentTarget.innerHTML = "<h1>POOF!</h1>"
+    //TODO some deleting
+  }
+}
 
-function noteShowListener(event){
+function noteDelete(note) {
+  console.log(note)
+  debugger
+  document.getElementById(`note-${note.id}`).remove()
+  // console.log(Note.all.find(noteObj => noteObj.id === note.id))
+  // //TODO delete the note from memory
+}
+
+function noteTitleListener(event){
   if (event.target.id !== 'note-titles'){
     const targetNote = Note.noteByTitle(event.target.id)
     showNote(targetNote)

@@ -3,7 +3,6 @@ class Adapter {
     return fetch('http://localhost:3000/api/v1/notes').then(resp => resp.json())
   }
 
-  // TODO Take off this last bit after testing
   static postNewNote(title, body) {
     return fetch('http://localhost:3000/api/v1/notes', {
       headers: {
@@ -15,7 +14,6 @@ class Adapter {
     }).then(resp => resp.json())
   }
 
-  // TODO take off the last of instantiation
   // TODO check out the arguments!
   static postUpdateNote(title, body) {
     return fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
@@ -25,13 +23,13 @@ class Adapter {
       },
       method: 'PATCH',
       body: JSON.stringify({body: body, title: title})
-    }).then(resp => resp.json()).then(noteObj => new Note(noteObj))
+    }).then(resp => resp.json())
   }
 
   static deleteNote(note) {
     fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
       method: 'DELETE'
-    })
+    }).then(resp => resp.json())
   }
 
 }
