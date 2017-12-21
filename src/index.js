@@ -29,46 +29,11 @@ function showNote(note) {
   noteShowDiv.innerHTML = note.renderAll()
 }
 
-//Move this to eventhandlers.js
-function showNoteListener(event) {
-  const note = Note.noteById(parseInt(event.target.dataset.noteId))
-  console.log(note)
-  if (event.target.id === "delete") {
-    event.preventDefault()
-    console.log(note)
-    //TODO Should the code below be abstracted to take an id
-    Adapter.deleteNote(note).then(json => {
-      Note.all = Note.all.filter(note =>
-        //TODO abstract the code aboe the list method
-        note.id !== json.id
-      )
-    })
-    noteDelete(note)
-    removeForm()
-    event.currentTarget.innerHTML = "<h1>POOF!</h1>"
-  } else if (event.target.id ==="edit" && !document.getElementById('note-form-div').children.length) {
-    event.preventDefault()
-    renderEditForm(note)
-  }
-}
-
 function removeForm() {
   const formDiv = document.getElementById('note-form-div')
   formDiv.innerHTML = ''
 }
 
-function renderEditForm(note) {
-     const formDiv = document.getElementById('note-form-div')
-     const noteForm = document.createElement('form')
-     noteForm.id = 'new-note-form'
-     noteForm.dataset.id = note.id
-     noteForm.innerHTML = `<label for="edit-note-title">Note Title</label><input id="edit-note-title" name="new-note-title" value="${note.title}"></input><label for="note-body">Body</label><textarea for="edit-note-body" id="edit-note-body" name="edit-note-body">${note.body}</textarea><input type="submit" id="edit-submit" data-id="${note.id}"value="Edit Note"></input>`
-     formDiv.appendChild(noteForm)
- }
-
-function noteDelete(note) {
-  document.getElementById(`note-${note.id}`).remove()
-}
 
 function noteTitleListener(event){
   if (event.target.id !== 'note-titles'){
