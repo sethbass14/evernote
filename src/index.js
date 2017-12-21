@@ -31,8 +31,6 @@ function showNote(note) {
 
 //Move this to eventhandlers.js
 function showNoteListener(event) {
-  console.log(event.target.id)
-  // const note = Note.noteByTitle(`${event.target.nextSibling.nextSibling.innerHTML}`)
   const note = Note.noteById(parseInt(event.target.dataset.noteId))
   console.log(note)
   if (event.target.id === "delete") {
@@ -49,8 +47,6 @@ function showNoteListener(event) {
     event.currentTarget.innerHTML = "<h1>POOF!</h1>"
   } else if (event.target.id ==="edit") {
     event.preventDefault()
-    console.log(1)
-    console.log(note)
     renderEditForm(note)
   }
 }
@@ -60,7 +56,7 @@ function renderEditForm(note) {
      const noteForm = document.createElement('form')
      noteForm.id = 'new-note-form'
      noteForm.dataset.id = note.id
-     noteForm.innerHTML = '<label for="edit-note-title">Note Title</label><input id="edit-note-title" name="new-note-title" value="${note.title}"></input><label for="note-body">Body</label><textarea for="edit-note-body" id="edit-note-body" name="edit-note-body" value="${note.body}"></textarea><input type="submit" id="note-submit" value="Edit Note"></input>'
+     noteForm.innerHTML = `<label for="edit-note-title">Note Title</label><input id="edit-note-title" name="new-note-title" value="${note.title}"></input><label for="note-body">Body</label><textarea for="edit-note-body" id="edit-note-body" name="edit-note-body">${note.body}</textarea><input type="submit" id="edit-submit" data-id="${note.id}"value="Edit Note"></input>`
      formDiv.appendChild(noteForm)
  }
 
@@ -80,7 +76,28 @@ function noteFormListener(event) {
     event.preventDefault()
     newNote()
     event.currentTarget.innerHTML = ''
+  } else if (event.target.id === 'edit-submit') {
+    event.preventDefault()
+    console.log(event.target.dataset.id)
+    console.log(Note.noteById(parseInt(event.target.dataset.id)))
+    debugger
+    editNote(Note.noteById(parseInt(event.target.dataset.id)))
+    event.currentTarget.innerHTML = ''
   }
+}
+
+function editNote(note) {
+  const noteTitle = document.getElementById('edit-note-title').value
+  const noteBody = document.getElementById('edit-note-body').value
+  console.log(noteTitle)
+  console.log(noteBody)
+  console.log(note)
+  const editNotePromise = Adapter.postUpdateNote(note, noteTitle, noteBody)
+  editNotePromise.then(noteObj => new Note(noteObj)).then(note => {
+    noteDelete(note)
+    showNote(note)
+    showNoteTitle(note)
+  })
 }
 
 function newNote() {

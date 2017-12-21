@@ -15,7 +15,7 @@ class Adapter {
   }
 
   // TODO check out the arguments!
-  static postUpdateNote(title, body) {
+  static postUpdateNote(note, title, body) {
     return fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
       headers: {
         'Content-Type': 'application/json',
